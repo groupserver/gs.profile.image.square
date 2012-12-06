@@ -2,5 +2,7 @@
   <img src="/foo" title="Image of A. Person"
        tal:condition="view/userImageShow"
        tal:attributes="src string:${view/userImageUrl};
-                       title string:Image of ${view/userInfo/name};"/>
+                       title string:Image of ${view/userInfo/name};
+                       width view/width;
+                       height view/height;"/>
 </div><!--userimage-->
