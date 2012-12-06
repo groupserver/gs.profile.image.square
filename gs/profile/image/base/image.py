@@ -63,7 +63,6 @@ class Image(ProfilePage):
     def image(self):
         retval = None
         if self.imagePath:
-            # TODO: Add the x-sendfile suff
             f = file(self.imagePath, 'rb')
             gsImage = GSImage(f)
             retval = gsImage.get_resized(self.width, self.height,
@@ -71,6 +70,7 @@ class Image(ProfilePage):
         return retval
 
     def __call__(self):
+        # TODO: Add the x-sendfile suff
         if self.image:
             hdr = 'inline; filename={0}.jpg'.format(self.userInfo.id)
             self.request.RESPONSE.setHeader('Content-Disposition', hdr)
@@ -80,7 +80,7 @@ class Image(ProfilePage):
 
             self.request.RESPONSE.setHeader('Content-Type',
                                             self.image.contentType)
-            retval = self.image
+            retval = self.image.data
         else:
             missingImage = '/++resource++gs-profile-image-base-missing.jpg'
             retval = self.request.RESPONSE.redirect(missingImage)
