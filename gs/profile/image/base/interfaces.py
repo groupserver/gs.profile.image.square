@@ -42,4 +42,4 @@ class IGSUserImage(IContentProvider):
         description=u'The URL of the image to use for the missing-image '
                     u'image.',
         required=False,
-        default='/++resource++missing-profile-image.jpg')
+        default='/++resource++gs-profile-image-base-missing.jpg')
