@@ -32,8 +32,17 @@ setup(name='gs.profile.image.base',
     zip_safe=True,
     install_requires=[
         'setuptools',
+        'zope.browserresource',
+        'zope.cachedescriptors',
+        'zope.contentprovider',
+        'zope.pagetemplate',
+        'zope.schema',
+        'gs.image',
+        'gs.profile.base',
+        'gs.viewlet',
+        'Products.CustomUserFolder',
+        'Products.XWFCore',
     ],
     entry_points="""
     # -*- Entry points: -*-
     """,)
-

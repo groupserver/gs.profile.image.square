@@ -19,9 +19,15 @@
     provides="zope.contentprovider.interfaces.IContentProvider"
     name="groupserver.UserImage"/>
 
+  <browser:page
+    name="gs-profile-image"
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
+    class=".image.Image"
+    permission="zope2.View" />
+
   <browser:resource
     name="gs-profile-image-base-missing.jpg"
-    image="browser/images/missing-image.jpg"    
+    file="browser/images/missing-image.jpg"    
     permission="zope2.Public" />
 
 </configure>
