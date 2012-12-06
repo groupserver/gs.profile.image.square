@@ -1,13 +1,9 @@
 # coding=utf-8
 from zope.cachedescriptors.property import Lazy
+from zope.contentprovider.interfaces import UpdateNotCalled
 from zope.pagetemplate.pagetemplatefile import PageTemplateFile
-from zope.interface import implements, Interface
-from zope.component import adapts, createObject, provideAdapter
-from zope.contentprovider.interfaces import UpdateNotCalled, IContentProvider
-from zope.publisher.interfaces.browser import IDefaultBrowserLayer
+from Products.CustomUserFolder.interfaces import IGSUserInfo
 from gs.viewlet.contentprovider import SiteContentProvider
-from Products.XWFCore import XWFUtils
-from interfaces import IGSUserImage
 
 
 class UserImageContentProvider(SiteContentProvider):
@@ -26,21 +22,24 @@ class UserImageContentProvider(SiteContentProvider):
         if not self.__updated:
             raise UpdateNotCalled
         return self.pageTemplate(view=self)
-        
+
+    @Lazy
+    def userInfo(self):
+        retval = IGSUserInfo(self.user)
+        return retval
+
     @Lazy
     def userImageUrl(self):
-        # check that we aren't dealing with an Anonymous user
-        if self.user.getId():
-            retval = self.user.get_image() or ''
+        if self.userInfo.anonymous:
+            retval = self.missingImage
         else:
-            retval = ''
-
+            r = '{0}/gs-profile-image'
+            retval = r.format(self.userInfo.url)
         return retval
-        
+
     @Lazy
     def userImageShow(self):
-        retval = (bool(self.userImageUrl) 
-                  and (self.showImageRegardlessOfUserSetting or
-                       getattr(self.user, 'showImage', False)))
+        retval = (self.showImageRegardlessOfUserSetting or
+                    getattr(self.user, 'showImage', False))
         assert type(retval) == bool
         return retval
