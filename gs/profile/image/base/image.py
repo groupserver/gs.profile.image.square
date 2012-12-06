@@ -11,6 +11,11 @@ class Image(ProfilePage):
 
     def __init__(self, context, request):
         super(Image, self).__init__(context, request)
+        self.traverse_subpath = []
+
+    def publishTraverse(self, request, name):
+        self.traverse_subpath.append(name)
+        return self
 
     @Lazy
     def imageDir(self):
@@ -33,12 +38,12 @@ class Image(ProfilePage):
         retval = None
         files = glob(imagePath)
         if files and os.path.isfile(files[0]):
-            retval = imagePath[0]
+            retval = files[0]
         return retval
 
     @Lazy
     def width(self):
-        tsp = self.request.traverse_subpath
+        tsp = self.traverse_subpath
         if len(tsp) > 1:
             retval = int(tsp[1])
         else:
@@ -47,7 +52,7 @@ class Image(ProfilePage):
 
     @Lazy
     def height(self):
-        tsp = self.request.traverse_subpath
+        tsp = self.traverse_subpath
         if len(tsp) >= 3:
             retval = int(tsp[2])
         else:
