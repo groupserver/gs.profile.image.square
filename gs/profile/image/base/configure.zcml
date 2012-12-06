@@ -19,4 +19,9 @@
     provides="zope.contentprovider.interfaces.IContentProvider"
     name="groupserver.UserImage"/>
 
+  <browser:resource
+    name="gs-profile-image-base-missing.jpg"
+    image="browser/images/missing-image.jpg"    
+    permission="zope2.Public" />
+
 </configure>
