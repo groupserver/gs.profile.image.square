@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
+from errno import ENOENT
 from glob import glob
 import os.path
 from zope.cachedescriptors.property import Lazy
 from gs.image import GSImage
 from Products.XWFCore.XWFUtils import locateDataDirectory
 
-EX_NOINPUT = 66  # /usr/include/sysexits.h
-
 
 class UserImage(GSImage):
 
     def __init__(self, context, userInfo):
+        assert context
         self.context = context
+
+        assert userInfo
         self.userInfo = userInfo
 
         super(UserImage, self).__init__(self.file)
@@ -39,8 +41,9 @@ class UserImage(GSImage):
         if files and os.path.isfile(files[0]):
             retval = files[0]
         else:
-            raise IOError(EX_NOINPUT, 'Cannot open the profile image',
-                            imagePath)
+            m = 'Cannot open the profile image for {name} ({id})'
+            msg = m.format(name=self.userInfo.name, id=self.userInfo.id)
+            raise IOError(ENOENT, msg, imagePath)
         return retval
 
     @Lazy
