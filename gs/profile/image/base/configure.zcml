@@ -24,6 +24,9 @@
     for="Products.CustomUserFolder.interfaces.ICustomUser"
     class=".image.Image"
     permission="zope2.View" />
+  <class class=".image.Image">
+    <implements interface="zope.publisher.interfaces.IPublishTraverse"/>
+  </class>
 
   <browser:resource
     name="gs-profile-image-base-missing.jpg"
