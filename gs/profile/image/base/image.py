@@ -44,8 +44,8 @@ class Image(ProfilePage):
     @Lazy
     def width(self):
         tsp = self.traverse_subpath
-        if len(tsp) > 1:
-            retval = int(tsp[1])
+        if len(tsp) > 0:
+            retval = int(tsp[0])
         else:
             retval = 54  # FIXME: use gs.config
         return retval
@@ -53,8 +53,8 @@ class Image(ProfilePage):
     @Lazy
     def height(self):
         tsp = self.traverse_subpath
-        if len(tsp) >= 3:
-            retval = int(tsp[2])
+        if len(tsp) >= 2:
+            retval = int(tsp[1])
         else:
             retval = 72  # FIXME: use gs.config
         return retval
