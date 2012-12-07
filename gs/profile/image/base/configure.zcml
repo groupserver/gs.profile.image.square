@@ -8,14 +8,14 @@
   <interface 
     interface=".interfaces.IGSUserImage"
     type="zope.contentprovider.interfaces.ITALNamespaceData"/>
-  <class class=".userimage.UserImageContentProvider">
+  <class class=".contentprovider.UserImageContentProvider">
     <implements interface=".interfaces.IGSUserImage"/>
   </class>
   <adapter
     for="zope.interface.Interface 
          zope.publisher.interfaces.browser.IDefaultBrowserLayer 
          zope.interface.Interface"
-    factory=".userimage.UserImageContentProvider"
+    factory=".contentprovider.UserImageContentProvider"
     provides="zope.contentprovider.interfaces.IContentProvider"
     name="groupserver.UserImage"/>
 
