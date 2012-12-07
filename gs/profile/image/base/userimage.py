@@ -5,12 +5,16 @@ from zope.cachedescriptors.property import Lazy
 from gs.image import GSImage
 from Products.XWFCore.XWFUtils import locateDataDirectory
 
+EX_NOINPUT = 66  # /usr/include/sysexits.h
 
-class UserImage(object):
+
+class UserImage(GSImage):
 
     def __init__(self, context, userInfo):
         self.context = context
         self.userInfo = userInfo
+
+        super(UserImage, self).__init__(self.file)
 
     @Lazy
     def imageDir(self):
@@ -34,12 +38,15 @@ class UserImage(object):
         files = glob(imagePath)
         if files and os.path.isfile(files[0]):
             retval = files[0]
+        else:
+            raise IOError(EX_NOINPUT, 'Cannot open the profile image',
+                            imagePath)
         return retval
 
     @Lazy
-    def image(self):
+    def file(self):
         retval = None
+
         if self.imagePath:
-            f = file(self.imagePath, 'rb')
-            retval = GSImage(f)
+            retval = file(self.imagePath, 'rb')
         return retval
