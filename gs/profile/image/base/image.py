@@ -15,12 +15,17 @@ class Image(ProfilePage):
         return self
 
     @Lazy
+    def userImage(self):
+        retval = UserImage(self.context, self.userInfo)
+        return retval
+
+    @Lazy
     def width(self):
         tsp = self.traverse_subpath
         if len(tsp) > 0:
             retval = int(tsp[0])
         else:
-            retval = 54  # FIXME: use gs.config
+            retval = self.userImage.width
         return retval
 
     @Lazy
@@ -28,17 +33,21 @@ class Image(ProfilePage):
         tsp = self.traverse_subpath
         if len(tsp) >= 2:
             retval = int(tsp[1])
+        elif len(tsp) == 1:
+            r = float(self.userImage.height) / float(self.userImage.width)
+            retval = int((self.width * r) + 0.5)
         else:
-            retval = 72  # FIXME: use gs.config
+            retval = self.userImage.height
         return retval
 
     @Lazy
     def image(self):
-        retval = None
-        userImage = UserImage(self.context, self.userInfo)
-        if userImage.image:
-            retval = userImage.image.get_resized(self.width, self.height,
-                                                    maintain_aspect=True)
+        if self.traverse_subpath:
+            retval = self.userImage.get_resized(self.width, self.height,
+                                                maintain_aspect=True,
+                                                only_smaller=False)
+        else:
+            retval = self.userImage
         return retval
 
     def __call__(self):
