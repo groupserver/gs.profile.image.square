@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
-from glob import glob
-import os.path
 from zope.cachedescriptors.property import Lazy
-from Products.XWFCore.XWFUtils import locateDataDirectory
-from gs.image import GSImage
 from gs.profile.base.page import ProfilePage
+from userimage import UserImage
 
 
 class Image(ProfilePage):
@@ -16,30 +13,6 @@ class Image(ProfilePage):
     def publishTraverse(self, request, name):
         self.traverse_subpath.append(name)
         return self
-
-    @Lazy
-    def imageDir(self):
-        # TODO: Cache
-        site_root = self.context.site_root()
-        siteId = site_root.getId()
-        retval = locateDataDirectory("groupserver.user.image", (siteId,))
-        return retval
-
-    @Lazy
-    def imagePath(self):
-        # TODO: Cache
-        # --=mpj17=-- Note to Future Coder: version numbers could be added to
-        # the files: something like userId-YYYYMMDDHHMMSS.ext ?
-        # '{0}-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
-        # '[0-9][0-9].*'.format(self.userInfo.id)
-        filename = '{0}.*'.format(self.userInfo.id)
-        imagePath = os.path.join(self.imageDir, filename)
-
-        retval = None
-        files = glob(imagePath)
-        if files and os.path.isfile(files[0]):
-            retval = files[0]
-        return retval
 
     @Lazy
     def width(self):
@@ -62,11 +35,10 @@ class Image(ProfilePage):
     @Lazy
     def image(self):
         retval = None
-        if self.imagePath:
-            f = file(self.imagePath, 'rb')
-            gsImage = GSImage(f)
-            retval = gsImage.get_resized(self.width, self.height,
-                                            maintain_aspect=True)
+        userImage = UserImage(self.context, self.userInfo)
+        if userImage.image:
+            retval = userImage.image.get_resized(self.width, self.height,
+                                                    maintain_aspect=True)
         return retval
 
     def __call__(self):

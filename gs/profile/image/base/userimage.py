@@ -1,0 +1,45 @@
+# -*- coding: utf-8 -*-
+from glob import glob
+import os.path
+from zope.cachedescriptors.property import Lazy
+from gs.image import GSImage
+from Products.XWFCore.XWFUtils import locateDataDirectory
+
+
+class UserImage(object):
+
+    def __init__(self, context, userInfo):
+        self.context = context
+        self.userInfo = userInfo
+
+    @Lazy
+    def imageDir(self):
+        # TODO: Cache
+        site_root = self.context.site_root()
+        siteId = site_root.getId()
+        retval = locateDataDirectory("groupserver.user.image", (siteId,))
+        return retval
+
+    @Lazy
+    def imagePath(self):
+        # TODO: Cache
+        # --=mpj17=-- Note to Future Coder: version numbers could be added to
+        # the files: something like userId-YYYYMMDDHHMMSS.ext ?
+        # '{0}-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
+        # '[0-9][0-9].*'.format(self.userInfo.id)
+        filename = '{0}.*'.format(self.userInfo.id)
+        imagePath = os.path.join(self.imageDir, filename)
+
+        retval = None
+        files = glob(imagePath)
+        if files and os.path.isfile(files[0]):
+            retval = files[0]
+        return retval
+
+    @Lazy
+    def image(self):
+        retval = None
+        if self.imagePath:
+            f = file(self.imagePath, 'rb')
+            retval = GSImage(f)
+        return retval
