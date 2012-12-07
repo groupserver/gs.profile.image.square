@@ -33,8 +33,9 @@ class UserImageContentProvider(SiteContentProvider):
         if self.userInfo.anonymous:
             retval = self.missingImage
         else:
-            r = '{0}/gs-profile-image'
-            retval = r.format(self.userInfo.url)
+            r = '{profile}/gs-profile-image/{width}/{height}'
+            retval = r.format(profile=self.userInfo.url, width=self.width,
+                                height=self.height)
         return retval
 
     @Lazy
