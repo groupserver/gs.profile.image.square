@@ -1,2 +1,2 @@
-# coding=utf-8
-# This space intentionally left blank.
+# -*- coding: utf-8 -*-
+from userimage import UserImage  # lint:ok
