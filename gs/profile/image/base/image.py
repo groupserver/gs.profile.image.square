@@ -52,7 +52,7 @@ class Image(ProfilePage):
 
     def __call__(self):
         # TODO: Add the x-sendfile suff
-        if self.image:
+        try:
             hdr = 'inline; filename={0}.jpg'.format(self.userInfo.id)
             self.request.RESPONSE.setHeader('Content-Disposition', hdr)
 
@@ -62,7 +62,7 @@ class Image(ProfilePage):
             self.request.RESPONSE.setHeader('Content-Type',
                                             self.image.contentType)
             retval = self.image.data
-        else:
+        except IOError:
             missingImage = '/++resource++gs-profile-image-base-missing.jpg'
             retval = self.request.RESPONSE.redirect(missingImage)
         return retval
