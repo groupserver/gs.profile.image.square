@@ -4,6 +4,7 @@ from zope.contentprovider.interfaces import UpdateNotCalled
 from zope.pagetemplate.pagetemplatefile import PageTemplateFile
 from Products.CustomUserFolder.interfaces import IGSUserInfo
 from gs.viewlet.contentprovider import SiteContentProvider
+from userimage import UserImage
 
 
 class UserImageContentProvider(SiteContentProvider):
@@ -29,13 +30,20 @@ class UserImageContentProvider(SiteContentProvider):
         return retval
 
     @Lazy
+    def userImage(self):
+        retval = UserImage(self.context, self.userInfo)
+        return retval
+
+    @Lazy
     def userImageUrl(self):
-        if self.userInfo.anonymous:
-            retval = self.missingImage
-        else:
-            r = '{profile}/gs-profile-image/{width}/{height}'
-            retval = r.format(profile=self.userInfo.url, width=self.width,
-                                height=self.height)
+        retval = self.missingImage
+        try:
+            if (not(self.userInfo.anonymous) and self.userImage.imagePath):
+                r = '{profile}/gs-profile-image/{width}/{height}'
+                retval = r.format(profile=self.userInfo.url, width=self.width,
+                                    height=self.height)
+        except IOError:
+            pass  # Use the missingImage
         return retval
 
     @Lazy
