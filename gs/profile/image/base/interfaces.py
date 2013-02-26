@@ -29,13 +29,13 @@ class IGSUserImage(IContentProvider):
         title=u'Width',
         description=u'The width of the image, in pixels.',
         required=False,
-        default=54)  # FIXME: use gs.config
+        default=50)  # FIXME: use gs.config
 
     height = Int(
         title=u'Height',
         description=u'The height of the image, in pixels.',
         required=False,
-        default=72)  # FIXME: use gs.config
+        default=70)  # FIXME: use gs.config
 
     missingImage = ASCIILine(
         title=u'Missing Image',
