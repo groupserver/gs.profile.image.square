@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:browser="http://namespaces.zope.org/browser"
-  i18n_domain="groupserver">
-
+           i18n_domain="groupserver">
+  
   <!--=mpj17= While viewlets have some ZCML support, the simpler content
       - providers do not. Odd. -->
   <interface 
@@ -12,15 +12,15 @@
     <implements interface=".interfaces.IGSUserImage"/>
   </class>
   <adapter
+    name="groupserver.SquareUserImage"
     for="zope.interface.Interface 
          zope.publisher.interfaces.browser.IDefaultBrowserLayer 
          zope.interface.Interface"
     factory=".contentprovider.UserImageContentProvider"
-    provides="zope.contentprovider.interfaces.IContentProvider"
-    name="groupserver.UserImage"/>
+    provides="zope.contentprovider.interfaces.IContentProvider"/>
 
   <browser:page
-    name="gs-profile-image"
+    name="gs-profile-image-square"
     for="Products.CustomUserFolder.interfaces.ICustomUser"
     class=".image.Image"
     permission="zope2.View" />
@@ -29,7 +29,7 @@
   </class>
 
   <browser:resource
-    name="gs-profile-image-base-missing.jpg"
+    name="gs-profile-image-square-missing.jpg"
     file="browser/images/missing-image.jpg"    
     permission="zope2.Public" />
 

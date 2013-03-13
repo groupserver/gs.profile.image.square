@@ -5,9 +5,9 @@ from version import get_version
 
 version = get_version()
 
-setup(name='gs.profile.image.base',
+setup(name='gs.profile.image.square',
     version=version,
-    description="The core profile image support for GroupServer.",
+    description="Support for square profile images in GroupServer.",
     long_description=open("README.txt").read() + "\n" +
                       open(os.path.join("docs", "HISTORY.txt")).read(),
     classifiers=[
