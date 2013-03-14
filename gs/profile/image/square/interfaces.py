@@ -17,4 +17,4 @@ class IGSSquareUserImage(IGSUserImage):
         description=u'The URL of the image to use for the missing-image '
                     u'image.',
         required=False,
-        default='/++resource++gs-profile-image-base-missing.jpg')
+        default='/++resource++gs-profile-image-square-missing.jpg')
