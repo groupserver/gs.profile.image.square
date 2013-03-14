@@ -25,17 +25,17 @@ class SquareImage(Image):
 
     @Lazy
     def image(self):
-        if self.traverse_subpath:
-            retval = self.userImage.get_resized(self.size)
-        else:
+        if self.userImage.width == self.userImage.height == self.size:
             retval = self.userImage
+        else:
+            retval = self.userImage.get_resized(self.size)
         return retval
 
     def __call__(self):
         # TODO: Add the x-sendfile suff
         try:
             h = 'inline; filename={0}-square-{1}.jpg'
-            hdr = h.format(self.userInfo.id, self.size)
+            hdr = h.format(self.userInfo.nickname, self.size)
             self.request.RESPONSE.setHeader('Content-Disposition', hdr)
 
             self.request.RESPONSE.setHeader('Cache-Control',
