@@ -6,17 +6,17 @@
   <!--=mpj17= While viewlets have some ZCML support, the simpler content
       - providers do not. Odd. -->
   <interface 
-    interface=".interfaces.IGSUserImage"
+    interface=".interfaces.IGSSquareUserImage"
     type="zope.contentprovider.interfaces.ITALNamespaceData"/>
-  <class class=".contentprovider.UserImageContentProvider">
-    <implements interface=".interfaces.IGSUserImage"/>
+  <class class=".contentprovider.SquareUserImageContentProvider">
+    <implements interface=".interfaces.IGSSquareUserImage"/>
   </class>
   <adapter
     name="groupserver.SquareUserImage"
     for="zope.interface.Interface 
          zope.publisher.interfaces.browser.IDefaultBrowserLayer 
          zope.interface.Interface"
-    factory=".contentprovider.UserImageContentProvider"
+    factory=".contentprovider.SquareUserImageContentProvider"
     provides="zope.contentprovider.interfaces.IContentProvider"/>
 
   <browser:page
