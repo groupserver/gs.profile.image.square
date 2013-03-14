@@ -22,7 +22,7 @@
   <browser:page
     name="gs-profile-image-square"
     for="Products.CustomUserFolder.interfaces.ICustomUser"
-    class=".image.Image"
+    class=".image.SquareImage"
     permission="zope2.View" />
   <class class=".image.Image">
     <implements interface="zope.publisher.interfaces.IPublishTraverse"/>
