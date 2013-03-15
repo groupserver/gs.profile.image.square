@@ -5,6 +5,12 @@ from gs.profile.image.base.interfaces import IGSUserImage
 
 class IGSSquareUserImage(IGSUserImage):
     """A Square User Image"""
+    pageTemplateFileName = ASCIILine(
+        title=u"Page Template File Name",
+        description=u'The name of the ZPT file that is used to render the '
+                    u'profile image.',
+        required=False,
+        default="browser/templates/userimage.pt")
 
     size = Int(
         title=u'Size',

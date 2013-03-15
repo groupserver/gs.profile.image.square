@@ -1,8 +1,7 @@
-<div class="userimage photo" tal:define="view options/view;">
+<div class="userimage photo userimage-square" tal:define="view options/view;">
   <img src="/foo" title="Image of A. Person"
        tal:condition="view/userImageShow"
        tal:attributes="src string:${view/userImageUrl};
                        title string:Image of ${view/userInfo/name};
-                       width view/width;
-                       height view/height;"/>
+                       width view/size; height view/size;"/>
 </div><!--userimage-->
