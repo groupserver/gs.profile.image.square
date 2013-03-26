@@ -81,4 +81,4 @@ Resources
 .. [#base] See <https://source.iopen.net/groupserver/gs.profile.image.base>
 .. [#image] See <https://source.iopen.net/groupserver/gs.image>
 
-..  LocalWords:  groupserver
+..  LocalWords:  groupserver SquareUserImage

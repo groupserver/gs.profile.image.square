@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 import os
 from setuptools import setup, find_packages
 from version import get_version
@@ -32,17 +32,13 @@ setup(name='gs.profile.image.square',
     zip_safe=True,
     install_requires=[
         'setuptools',
-        'zope.browserresource',
         'zope.cachedescriptors',
         'zope.contentprovider',
         'zope.pagetemplate',
         'zope.publisher',
         'zope.schema',
         'gs.image',
-        'gs.profile.base',
-        'gs.viewlet',
-        'Products.CustomUserFolder',
-        'Products.XWFCore',
+        'gs.profile.image.base',
     ],
     entry_points="""
     # -*- Entry points: -*-
