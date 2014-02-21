@@ -12,8 +12,9 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals
 from zope.cachedescriptors.property import Lazy
+from gs.core import to_ascii
 from gs.profile.image.base import Image
 from .userimage import SquareUserImage
 
@@ -50,16 +51,17 @@ class SquareImage(Image):
         try:
             h = 'inline; filename={0}-square-{1}.jpg'
             hdr = h.format(self.userInfo.nickname, self.size)
-            self.request.RESPONSE.setHeader('Content-Disposition', hdr)
+            self.request.RESPONSE.setHeader(to_ascii('Content-Disposition'),
+                                            to_ascii(hdr))
 
-            self.request.RESPONSE.setHeader('Cache-Control',
-                                            'private; max-age=1200')
+            self.request.RESPONSE.setHeader(to_ascii('Cache-Control'),
+                                            to_ascii('private; max-age=1200'))
 
-            self.request.RESPONSE.setHeader('Content-Length',
-                                            self.image.getSize())
+            self.request.RESPONSE.setHeader(to_ascii('Content-Length'),
+                                            to_ascii(str(self.image.getSize())))
 
-            self.request.RESPONSE.setHeader('Content-Type',
-                                            self.image.contentType)
+            self.request.RESPONSE.setHeader(to_ascii('Content-Type'),
+                                            to_ascii(self.image.contentType))
             retval = self.image.data
         except IOError:
             missingImage = '/++resource++gs-profile-image-square-missing.jpg'
