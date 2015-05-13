@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
-# Copyright © 2014 OnlineGroups.net and Contributors.
+# Copyright © 2014, 2015 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -11,7 +11,7 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
+############################################################################
 from __future__ import unicode_literals
 from zope.schema import ASCIILine, Int
 from gs.profile.image.base.interfaces import IGSUserImage
@@ -24,7 +24,7 @@ class IGSSquareUserImage(IGSUserImage):
         description='The name of the ZPT file that is used to render the '
                     'profile image.',
         required=False,
-        default="browser/templates/userimage.pt".encode('ascii', 'ignore'))
+        default=b"browser/templates/userimage.pt")
 
     size = Int(
         title='Size',
@@ -37,4 +37,4 @@ class IGSSquareUserImage(IGSUserImage):
         description='The URL of the image to use for the missing-image '
                     'image.',
         required=False,
-        default='/++resource++gs-profile-image-square-missing.jpg'.encode('ascii', 'ignore'))
+        default=b'/++resource++gs-profile-image-square-missing.jpg')

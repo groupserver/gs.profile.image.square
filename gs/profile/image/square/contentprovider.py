@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
-# Copyright © 2014 OnlineGroups.net and Contributors.
+# Copyright © 2014, 2015 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -11,8 +11,8 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
-from __future__ import absolute_import
+############################################################################
+from __future__ import absolute_import, unicode_literals
 from zope.cachedescriptors.property import Lazy
 from zope.pagetemplate.pagetemplatefile import PageTemplateFile
 from gs.profile.image.base import UserImageContentProvider
@@ -22,8 +22,8 @@ from .userimage import SquareUserImage
 class SquareUserImageContentProvider(UserImageContentProvider):
     """The square user image."""
     def __init__(self, context, request, view):
-        super(SquareUserImageContentProvider, self).__init__(context, request,
-                                                                view)
+        super(SquareUserImageContentProvider, self).__init__(
+            context, request, view)
 
     def update(self):
         super(SquareUserImageContentProvider, self).update()
@@ -45,8 +45,8 @@ class SquareUserImageContentProvider(UserImageContentProvider):
 
     @Lazy
     def resizeNeeded(self):
-        retval = (int(self.size) != self.userImage.width
-                    != self.userImage.height)
+        retval = ((int(self.size) != self.userImage.width)
+                  and (int(self.size) != self.userImage.height))
         return retval
 
     @Lazy
@@ -58,10 +58,12 @@ class SquareUserImageContentProvider(UserImageContentProvider):
         return retval
 
     def profile_image_link(self):
-        r = '{profile}/gs-profile-image-square'
+        r = b'{profile}/gs-profile-image-square'
         retval = r.format(profile=self.userInfo.url)
         return retval
 
     def resize_link(self):
-        r = '{profileLink}/{size}'
-        return r.format(profileLink=self.profile_image_link(), size=self.size)
+        r = b'{profileLink}/{size}'
+        retval = r.format(profileLink=self.profile_image_link(),
+                          size=self.size)
+        return retval
