@@ -47,7 +47,8 @@ class SquareImage(Image):
         return retval
 
     def __call__(self):
-        # TODO: Add the x-sendfile suff
+        # TODO: Add X-Sendfile for uWSGI offloading
+        # http://uwsgi-docs.readthedocs.org/en/latest/articles/OffloadingWebsocketsAndSSE.html#uwsgi-offloading
         try:
             h = 'inline; filename={0}-square-{1}.jpg'
             hdr = h.format(self.userInfo.nickname, self.size)
